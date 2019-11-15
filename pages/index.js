@@ -5,15 +5,23 @@ import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/layout'
 
+
 const Home = ({data}) => (
 
   <div>
+      <Head>
+        <title>Movie List</title>
+        <meta
+          name="viewport"
+          content="initial-scale=1.0, width=device-width"
+          key="viewport"
+        />
+      </Head>
 	<Layout>
 		<div className="MovieInFocus"> Movie in focus</div>
 		<div className='main'>
             <h2>Popular Movies</h2>
 			<div className='row'>
-					
 						{data.map((value , i)=>{
 							return (
 								<div className="movieWrapper">

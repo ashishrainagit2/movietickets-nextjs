@@ -21,6 +21,14 @@ const Home = ({data}) => {
     const { pid } = router.query
     return (
         <div>
+            <Head>
+                <title>Synopsis</title>
+                <meta
+                name="viewport"
+                content="initial-scale=1.0, width=device-width"
+                key="viewport"
+                />
+            </Head>
             <Layout>
                 <div className='main'>
                     <div>
