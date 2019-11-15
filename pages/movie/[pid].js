@@ -17,31 +17,57 @@ const Home = ({data}) => {
     //     }
     //   }, [])  
 
-
     const router = useRouter()
     const { pid } = router.query
     return (
         <div>
             <Layout>
                 <div className='main'>
-                    Movie : {data.original_title}
+                    <div>
+                        <img src={"https://image.tmdb.org/t/p/w1280/" + data.backdrop_path} />
+                    </div>
+                    <div className="detailsHolder">
+                        {data.original_title}
+                    </div> 
                 </div>
             </Layout>
             <style jsx>{`
             .main {
-            marign :10px;
-            border:1px solid grey;
+                marign :10px;
+                border:1px solid grey;
+                color:white;
+                width: 90%;
+                margin: 10px auto;
             }
+            .MovieInFocus {
+                display: none;
+            }
+            .detailsHolder {
+                text-align : center;
+                width: 100%;
+            }
+            `}</style>
+            <style global>{`
+                li:first-child {
+                    display:none;
+                }    
             `}</style>
         </div>
     )
 }
 
-Home.getInitialProps = async ({req}) => {
-    
-	const res = await fetch(`https://api.themoviedb.org/3/movie/333?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US`)
-	const json = await res.json()
-	console.log(">>>", json)
+Home.getInitialProps = async ({query, pathname, asPath, req , res ,jsonPageRes,err}) => {
+    console.log("1.query", query);
+    console.log("2.pathname", pathname);
+    console.log("3.asPath", asPath);
+    console.log("4.req", req);
+    console.log("5.res", res);
+    console.log("6.jsonPageRes", jsonPageRes);
+    console.log("7.err", err);
+
+    const url = "https://api.themoviedb.org/3/movie/" + query.pid + "?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US";
+	const response = await fetch(url)
+	const json = await response.json()
 	return {data : json}
 }
 

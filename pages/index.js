@@ -6,57 +6,79 @@ import fetch from 'isomorphic-unfetch'
 import Layout from '../components/layout'
 
 const Home = ({data}) => (
+
   <div>
 	<Layout>
+		<div className="MovieInFocus"> Movie in focus</div>
 		<div className='main'>
+            <h2>Popular Movies</h2>
 			<div className='row'>
-				<div>
-					<div>
+					
 						{data.map((value , i)=>{
 							return (
 								<div className="movieWrapper">
-                  <div>
-                    <img src={"https://image.tmdb.org/t/p/w300/" + value.poster_path} alt="Movie Image"/>
-                  </div>
-									<Link href="/movie/[pid]" as={{pathname: "/movie/" + value.id , query : {name : 'fordemo'}}} prefetch={false}>
-										<a className="name"> {(value.original_title).slice(0, 10)} </a>
-									</Link>
+                                    <div className="displayUnit">
+                                        
+                                        <Link href="/movie/[pid]" as={{pathname: "/movie/" + value.id , query : {name : 'fordemo'}}} prefetch={false} passHref>
+                                            <div>
+                                                <img src={"https://image.tmdb.org/t/p/w300/" + value.poster_path} alt="Movie Image"/>
+                                            </div>
+                                        </Link>
+                                    </div>
 								</div>
 							)
 						})}
-					</div>
-				</div>			
+								
 			</div>
 		</div>
-    <div className="pagination">
-      <span>1</span>
-    </div>
+    	<div className="pagination">
+    		<span>1</span>
+    	</div>
 	</Layout>
+
     <style jsx>{`
 	.main {
 		marign :10px;
-		text-align:  center;
+        text-align:  center;
+        color: white;
 	}
 	.movieWrapper {
-    display: inline-block;
-    vertical-align: top;
+		display: inline-block;
+		vertical-align: top;
 		border: 1px solid grey;
-		min-width: 23%;
 		min-height: 300px;
-		overfllow: hidden;
-    text-align: center;
-    background: black;
-    min-height: 473px;
-  }
-  .name {
-    color: white;
-    text-decoration : none;
-  }
-  .pagination{
-    color: white;
-    width: 90%;
-    text-align: center;
-  }
+		overfllow: scroll;
+		text-align: center;
+		background: black;
+        min-height: 473px;
+        width:300px;
+        position: relative;
+      }
+    .displayUnit {
+        
+    }
+      .row{
+          width: 100%;
+          overflow: scroll;
+          position: relative;
+      }
+  	.name {
+		color: white;
+		text-decoration : none;
+  	}
+  	.pagination{
+		color: white;
+		width: 90%;
+		text-align: center;
+  	}
+  	.MovieInFocus {
+		min-height : 500px;
+  	}
+    `}</style>
+    <style global>{`
+        * {
+            box-sizing : border-box;
+        }
     `}</style>
   </div>
 )

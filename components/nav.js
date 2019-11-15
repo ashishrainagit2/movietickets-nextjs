@@ -37,29 +37,30 @@ Router.events.off('routeChangeStart', handleRouteChange)
 const Nav = () => (
   <div>
   <nav>
-    <ul>
-      <li>
-        <img src="/logomi.png" alt="logo image"/>
-      </li>
-      {/* <li>
-        <span onClick={handler}>here</span>
-      </li> */}
-      <li className="whitespace">
-        &nbsp;
-      </li>
-      <li>
-        <Link href='/' replace scroll={false} passHref prefetch={false}>
-          <a>Movies</a>
-        </Link>
-      </li>
-      {links.map(({ key, href, label }) => (
-        <li key={key}>
-          <a href={href}>{label}</a> 
+    <div className="navHolder">
+      <ul>
+        <li>
+          <img src="/logomi.png" alt="logo image"/>
         </li>
-      ))}
-      
-    </ul>
-    <div className="MovieInFocus"> Movie in focus</div>
+        {/* <li>
+          <span onClick={handler}>here</span>
+        </li> */}
+        <li className="whitespace">
+          &nbsp;
+        </li>
+        <li>
+          <Link href='/' replace scroll={false} passHref prefetch={false}>
+            <a>Movies</a>
+          </Link>
+        </li>
+        {links.map(({ key, href, label }) => (
+          <li key={key}>
+            <a href={href}>{label}</a> 
+          </li>
+        ))}
+        
+      </ul>
+    </div>
     <style jsx>{`
       :global(body) {
         margin: 0;
@@ -70,6 +71,11 @@ const Nav = () => (
         text-align: center;
         width:90%;
         margin : 0 auto;
+      }
+      .navHolder {
+        background: white;
+        padding: 10px 0;
+        border: 1px solid #808080;
       }
       ul {
         display: flex;
@@ -94,9 +100,7 @@ const Nav = () => (
       .whitespace {
         width: 50%;
       }
-      .MovieInFocus {
-        min-height : 500px;
-      }
+      
     `}</style>
   </nav>
   </div>
