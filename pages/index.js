@@ -6,9 +6,9 @@ import fetch from 'isomorphic-unfetch'
 import Layout from '../components/layout'
 
 
-const Home = ({movieDataResults}) => {
+const Home = ({movieDataResults, tvDataResults}) => {
 {console.log("ashish" , typeof({movieDataResults}))  //object
-console.log("ashish2" , {movieDataResults}) //objects.movieData is an array of objects
+console.log("ashish2" , {movieDataResults}) //objects which has one key, of same name,  that is an array of objects
 
 // { movieData: 
 //     [ { popularity: 441.229,
@@ -17,6 +17,7 @@ console.log("ashish2" , {movieDataResults}) //objects.movieData is an array of o
 //         poster_path: '/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg',
 //         id: 475557}]
 // }
+
 }
 return (
   <div>
@@ -50,6 +51,27 @@ return (
 								
 			</div>
 		</div>
+        <br /><br />
+        <div className='main'>
+            <h2>Popular Shows</h2>
+			<div className='row'>
+						{tvDataResults.map((value , i)=>{
+							return (
+								<div className="movieWrapper">
+                                    <div className="displayUnit">
+                                        
+                                        <Link href="/movie/[pid]" as={{pathname: "/movie/" + value.id , query : {name : 'fordemo'}}} prefetch={false} passHref>
+                                            <div>
+                                                <img src={"https://image.tmdb.org/t/p/w300/" + value.poster_path} alt="Movie Image"/>
+                                            </div>
+                                        </Link>
+                                    </div>
+								</div>
+							)
+						})}	
+			</div>
+		</div>
+
     	<div className="pagination">
     		<span>1</span>
     	</div>
