@@ -6,8 +6,19 @@ import fetch from 'isomorphic-unfetch'
 import Layout from '../components/layout'
 
 
-const Home = ({data}) => (
+const Home = ({movieDataResults}) => {
+{console.log("ashish" , typeof({movieDataResults}))  //object
+console.log("ashish2" , {movieDataResults}) //objects.movieData is an array of objects
 
+// { movieData: 
+//     [ { popularity: 441.229,
+//         vote_count: 5591,
+//         video: false,
+//         poster_path: '/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg',
+//         id: 475557}]
+// }
+}
+return (
   <div>
       <Head>
         <title>Movie List</title>
@@ -22,7 +33,7 @@ const Home = ({data}) => (
 		<div className='main'>
             <h2>Popular Movies</h2>
 			<div className='row'>
-						{data.map((value , i)=>{
+						{movieDataResults.map((value , i)=>{
 							return (
 								<div className="movieWrapper">
                                     <div className="displayUnit">
@@ -89,23 +100,35 @@ const Home = ({data}) => (
         }
     `}</style>
   </div>
-)
-
-Home.getInitialProps = async ({req}) => {
-	const res = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&page=1')
-	const json = await res.json()
-	console.log(json)
-	return {data : json.results}
+    )
 }
 
-
-
 // Home.getInitialProps = async ({req}) => {
-// 	const res = await fetch('http://localhost:3000/api/index')
-// 	const data = await res.json()
-// 	console.log('>>>',(data))
-// 	console.log('>>><<<',typeof(data))
-// 	return (data)
+// 	const res = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&page=1')
+// 	const json = await res.json()
+//     console.log("ashish123" , typeof(json)) //object
+//     console.log(json)  
+//     // { page: 1,
+//     //     total_results: 10000,
+//     //     total_pages: 500
+//     // }
+// 	return {movieData : json.results}
 // }
+
+Home.getInitialProps = async ({req}) => {
+
+    const [movieData, tvData] = await Promise.all([
+        fetch(`https://api.themoviedb.org/3/movie/popular?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&page=1`).then(r => r.json()),
+        fetch(`https://api.themoviedb.org/3/discover/tv?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`).then(r => r.json())
+      ]);
+	console.log("ab", typeof(movieData))
+    console.log("abc" , (movieData))
+   
+    return {
+        movieDataResults : movieData.results,
+        tvDataResults : tvData.results
+    }
+}
+
 
 export default Home
