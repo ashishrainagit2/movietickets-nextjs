@@ -69,7 +69,6 @@ const Nav = () => (
       }
       nav {
         text-align: center;
-        width:90%;
         margin : 0 auto;
       }
       .navHolder {

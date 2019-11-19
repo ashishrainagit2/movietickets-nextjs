@@ -89,7 +89,7 @@
                     }
                   }
                   .member-footer .member-footer-link {
-                    color: #808080;
+                    color: white;
                     text-decoration: none;
                   }
                   .member-footer .member-footer-link:hover {

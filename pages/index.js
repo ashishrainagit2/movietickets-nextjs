@@ -4,21 +4,14 @@ import Nav from '../components/nav'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/layout'
+import MovieOnTopCard from '../components/MovieOnTopCard'
 
-
-const Home = ({movieDataResults, tvDataResults}) => {
-{console.log("ashish" , typeof({movieDataResults}))  //object
-console.log("ashish2" , {movieDataResults}) //objects which has one key, of same name,  that is an array of objects
-
-// { movieData: 
-//     [ { popularity: 441.229,
-//         vote_count: 5591,
-//         video: false,
-//         poster_path: '/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg',
-//         id: 475557}]
-// }
-
+const playHandler = () => {
+   document.getElementById('trailerWrapper').style.display = 'block';
+   document.getElementById('posterCard').style.display = 'none';
 }
+
+const Home = ({movieDataResults, tvDataResults, MovieOnTop }) => {
 return (
   <div>
       <Head>
@@ -30,31 +23,53 @@ return (
         />
       </Head>
 	<Layout>
-		<div className="MovieInFocus"> Movie in focus</div>
+		<div className="MovieInFocus"> 
+                    <div id="posterCard">
+                        <MovieOnTopCard   posterImg={MovieOnTop['poster_path']}/>
+                    </div>
+                    <div className="trailerWrapper" id="trailerWrapper">
+                        <iframe width="100%" height="543" src="https://www.youtube.com/embed/FHxhr6KAaUw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                        </iframe>
+                    </div>
+            <div className="MovieInFocusDetailsWrapper">
+                    <div className="MovieOnTopTitleWrapper">  
+                        {MovieOnTop['original_title']}
+                    </div>
+                    <div>
+                        {MovieOnTop['overview']}
+                    </div>
+                    <div>
+                        <button onClick={playHandler}>Play</button>
+                        <button>MyList</button>
+                        <button>More Info</button>
+                    </div>
+            </div>
+        </div>
 		<div className='main'>
             <h2>Popular Movies</h2>
 			<div className='row'>
-						{movieDataResults.map((value , i)=>{
-							return (
-								<div className="movieWrapper">
-                                    <div className="displayUnit">
-                                        
-                                        <Link href="/movie/[pid]" as={{pathname: "/movie/" + value.id , query : {name : 'fordemo'}}} prefetch={false} passHref>
-                                            <div>
-                                                <img src={"https://image.tmdb.org/t/p/w300/" + value.poster_path} alt="Movie Image"/>
-                                            </div>
-                                        </Link>
-                                    </div>
-								</div>
-							)
-						})}
-								
+                <div className="cardCarosel">
+                    {movieDataResults.map((value , i)=>{
+                        return (
+                            <div className="movieWrapper">
+                                <div className="displayUnit">
+                                    <Link href="/movie/[pid]" as={{pathname: "/movie/" + value.id , query : {name : 'fordemo'}}} prefetch={false} passHref>
+                                        <div>
+                                            <img src={"https://image.tmdb.org/t/p/w300/" + value.poster_path} alt="Movie Image"/>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        )
+                    })}	
+                </div>
 			</div>
 		</div>
         <br /><br />
         <div className='main'>
             <h2>Popular Shows</h2>
 			<div className='row'>
+                <div className="cardCarosel">
 						{tvDataResults.map((value , i)=>{
 							return (
 								<div className="movieWrapper">
@@ -69,6 +84,7 @@ return (
 								</div>
 							)
 						})}	
+                </div>
 			</div>
 		</div>
 
@@ -80,7 +96,6 @@ return (
     <style jsx>{`
 	.main {
 		marign :10px;
-        text-align:  center;
         color: white;
 	}
 	.movieWrapper {
@@ -113,12 +128,46 @@ return (
 		text-align: center;
   	}
   	.MovieInFocus {
-		min-height : 500px;
-  	}
+        min-height : 500px;
+        text-align: center;
+        margin: 0 auto;
+        max-height: 600px;
+      }
+      .MovieInFocusDetailsWrapper {
+          position: relative;
+          top: -500px;
+          color: white;
+          width: 600px;
+          text-align: left;
+          left: 60px;
+          line-height: 25px;
+      }
+      .MovieOnTopTitleWrapper {
+          font-size: 36px;
+          font-weight: bold;
+          margin: 10px 0px;
+      }
+
+      .MovieInFocusDetailsWrapper button {
+          width : 100px;
+          padding: 10px;
+          margin: 10px;
+          border-radius : 5px;
+      }
+      .trailerWrapper {
+          display : none;
+      }
+      .cardCarosel {
+          width : 6020px;
+          padding: 10px;
+      }
     `}</style>
     <style global>{`
         * {
             box-sizing : border-box;
+        }
+        body {
+            background: #141414;
         }
     `}</style>
   </div>
@@ -139,18 +188,17 @@ return (
 
 Home.getInitialProps = async ({req}) => {
 
-    const [movieData, tvData] = await Promise.all([
+    const [movieData, tvData,MovieOnTop] = await Promise.all([
         fetch(`https://api.themoviedb.org/3/movie/popular?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&page=1`).then(r => r.json()),
-        fetch(`https://api.themoviedb.org/3/discover/tv?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`).then(r => r.json())
+        fetch(`https://api.themoviedb.org/3/discover/tv?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`).then(r => r.json()),
+        fetch(`https://api.themoviedb.org/3/movie/508965?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US`).then(r => r.json())
       ]);
-	console.log("ab", typeof(movieData))
-    console.log("abc" , (movieData))
    
     return {
         movieDataResults : movieData.results,
-        tvDataResults : tvData.results
+        tvDataResults : tvData.results,
+        MovieOnTop : MovieOnTop
     }
 }
-
 
 export default Home
