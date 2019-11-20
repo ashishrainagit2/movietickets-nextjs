@@ -1,0 +1,1 @@
+{"ast":null,"code":"export default ((req, res) => {\n  const {\n    query: {\n      pid\n    }\n  } = req;\n  console.log(\"jknm\", pid);\n  res.end(`Post: ${pid}`);\n});","map":null,"metadata":{},"sourceType":"module"}
