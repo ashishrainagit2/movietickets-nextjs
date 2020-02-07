@@ -1,10 +1,12 @@
-import React from 'react'
+import React from 'react';
 import Head from 'next/head'
 import Nav from '../components/nav'
 import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
 import Layout from '../components/layout'
 import MovieOnTopCard from '../components/MovieOnTopCard'
+import withRedux from "next-redux-wrapper";
+import { connect } from 'react-redux';
 
 const playHandler = () => {
    document.getElementById('trailerWrapper').style.display = 'block';
@@ -186,14 +188,14 @@ return (
 // 	return {movieData : json.results}
 // }
 
-Home.getInitialProps = async ({req}) => {
-
+Home.getInitialProps = async ({store ,req}) => {
+    //store.dispatch({type: 'FOO', payload: 'foo'});
     const [movieData, tvData,MovieOnTop] = await Promise.all([
         fetch(`https://api.themoviedb.org/3/movie/popular?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&page=1`).then(r => r.json()),
         fetch(`https://api.themoviedb.org/3/discover/tv?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US&sort_by=popularity.desc&page=1&timezone=America%2FNew_York&include_null_first_air_dates=false`).then(r => r.json()),
         fetch(`https://api.themoviedb.org/3/movie/508965?api_key=c18a8c63bee9d66665a486a624d48177&language=en-US`).then(r => r.json())
       ]);
-   
+      
     return {
         movieDataResults : movieData.results,
         tvDataResults : tvData.results,
@@ -201,4 +203,4 @@ Home.getInitialProps = async ({req}) => {
     }
 }
 
-export default Home
+export default connect(state => state)(Home);

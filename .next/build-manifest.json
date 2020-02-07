@@ -1,53 +1,32 @@
 {
-  "devFiles": [],
+  "devFiles": [
+    "static/development/dll/dll_4b8bef20edde04f98d3f.js",
+    "static/development/dll/dll_4b8bef20edde04f98d3f.js.map"
+  ],
   "pages": {
     "/": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_app": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_error": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/_polyfills": [
-      "static/runtime/polyfills-21ab6e60c66a8e51fa1e.js"
-    ],
-    "/demo1": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
-    ],
-    "/demo2": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
+      "static/runtime/polyfills.js",
+      "static/runtime/polyfills.js.map"
     ],
     "/index": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
-    ],
-    "/movie/999": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
-    ],
-    "/movie/[pid]": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ],
     "/series": [
-      "static/runtime/webpack-08f7b238829422e3b9b2.js",
-      "static/chunks/commons.ee4f9004100e8a9338d7.js",
-      "static/runtime/main-d85a5d39362f50d530fd.js"
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
     ]
   }
 }

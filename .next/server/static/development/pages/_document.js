@@ -366,101 +366,6 @@ module.exports = _interopRequireWildcard;
 
 /***/ }),
 
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-body-tags-server!./":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-body-tags-server ***!
-  \*****************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-    
-
-    /* harmony default export */ __webpack_exports__["default"] = (function (ctx) {
-      return Promise.all([])
-    });
-  
-
-/***/ }),
-
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-head-tags-server!./":
-/*!*****************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-head-tags-server ***!
-  \*****************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-    
-
-    /* harmony default export */ __webpack_exports__["default"] = (function (ctx) {
-      return Promise.all([])
-    });
-  
-
-/***/ }),
-
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-html-props-server!./":
-/*!******************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-html-props-server ***!
-  \******************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-    
-
-    /* harmony default export */ __webpack_exports__["default"] = (function (ctx) {
-      return Promise.all([])
-    });
-  
-
-/***/ }),
-
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=unstable-enhance-app-server!./":
-/*!*******************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=unstable-enhance-app-server ***!
-  \*******************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-    
-
-    /* harmony default export */ __webpack_exports__["default"] = (function (ctx) {
-      return Promise.all([])
-    });
-  
-
-/***/ }),
-
-/***/ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=unstable-get-styles-server!./":
-/*!******************************************************************************************************************!*\
-  !*** ./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=unstable-get-styles-server ***!
-  \******************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-    
-
-    /* harmony default export */ __webpack_exports__["default"] = (function (ctx) {
-      return Promise.all([])
-    });
-  
-
-/***/ }),
-
 /***/ "./node_modules/next/dist/next-server/lib/constants.js":
 /*!*************************************************************!*\
   !*** ./node_modules/next/dist/next-server/lib/constants.js ***!
@@ -484,6 +389,7 @@ exports.PHASE_DEVELOPMENT_SERVER = 'phase-development-server';
 exports.PAGES_MANIFEST = 'pages-manifest.json';
 exports.BUILD_MANIFEST = 'build-manifest.json';
 exports.PRERENDER_MANIFEST = 'prerender-manifest.json';
+exports.ROUTES_MANIFEST = 'routes-manifest.json';
 exports.REACT_LOADABLE_MANIFEST = 'react-loadable-manifest.json';
 exports.SERVER_DIRECTORY = 'server';
 exports.SERVERLESS_DIRECTORY = 'serverless';
@@ -507,6 +413,7 @@ exports.IS_BUNDLED_PAGE_REGEX = /^static[/\\][^/\\]+[/\\]pages.*\.js$/; // match
 
 exports.ROUTE_NAME_REGEX = /^static[/\\][^/\\]+[/\\]pages[/\\](.*)\.js$/;
 exports.SERVERLESS_ROUTE_NAME_REGEX = /^pages[/\\](.*)\.js$/;
+exports.DEFAULT_REDIRECT_STATUS = 307;
 
 /***/ }),
 
@@ -688,26 +595,16 @@ exports.SUPPORTS_PERFORMANCE_USER_TIMING = exports.SUPPORTS_PERFORMANCE && typeo
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = __webpack_require__(/*! ../lib/constants */ "./node_modules/next/dist/next-server/lib/constants.js");
-const internalPrefixes = [/^\/_next\//, /^\/static\//];
-function isInternalUrl(url) {
-    for (const prefix of internalPrefixes) {
-        if (prefix.test(url)) {
-            return true;
-        }
-    }
-    return false;
-}
-exports.isInternalUrl = isInternalUrl;
 function isBlockedPage(pathname) {
     return constants_1.BLOCKED_PAGES.indexOf(pathname) !== -1;
 }
 exports.isBlockedPage = isBlockedPage;
 function cleanAmpPath(pathname) {
     if (pathname.match(/\?amp=(y|yes|true|1)/)) {
-        pathname = pathname.replace(/\?amp=(y|yes|true|1)/, '?');
+        pathname = pathname.replace(/\?amp=(y|yes|true|1)&?/, '?');
     }
     if (pathname.match(/&amp=(y|yes|true|1)/)) {
-        pathname = pathname.replace(/\?amp=(y|yes|true|1)/, '');
+        pathname = pathname.replace(/&amp=(y|yes|true|1)/, '');
     }
     pathname = pathname.replace(/\?$/, '');
     return pathname;
@@ -727,7 +624,7 @@ exports.cleanAmpPath = cleanAmpPath;
 "use strict";
 
 
-var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js");
+var _interopRequireWildcard3 = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js");
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "./node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
 
@@ -745,23 +642,17 @@ var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-co
 
 var _now = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/date/now */ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js"));
 
+var _promise = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/promise */ "./node_modules/@babel/runtime-corejs2/core-js/promise.js"));
+
+var _interopRequireWildcard2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime-corejs2/helpers/interopRequireWildcard.js"));
+
 var _set = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/core-js/set */ "./node_modules/@babel/runtime-corejs2/core-js/set.js"));
 
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2/helpers/asyncToGenerator */ "./node_modules/@babel/runtime-corejs2/helpers/asyncToGenerator.js"));
 
 var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "prop-types"));
 
-var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "react"));
-
-var _utils = __webpack_require__(/*! ../next-server/server/utils */ "./node_modules/next/dist/next-server/server/utils.js");
-
-var _utils2 = __webpack_require__(/*! ../next-server/lib/utils */ "./node_modules/next/dist/next-server/lib/utils.js");
-
-exports.DocumentContext = _utils2.DocumentContext;
-exports.DocumentInitialProps = _utils2.DocumentInitialProps;
-exports.DocumentProps = _utils2.DocumentProps;
-
-var _htmlescape = __webpack_require__(/*! ../server/htmlescape */ "./node_modules/next/dist/server/htmlescape.js");
+var _react = _interopRequireWildcard3(__webpack_require__(/*! react */ "react"));
 
 var _server = _interopRequireDefault(__webpack_require__(/*! styled-jsx/server */ "styled-jsx/server"));
 
@@ -769,21 +660,15 @@ var _constants = __webpack_require__(/*! ../next-server/lib/constants */ "./node
 
 var _documentContext = __webpack_require__(/*! ../next-server/lib/document-context */ "./node_modules/next/dist/next-server/lib/document-context.js");
 
-var _nextPluginLoaderMiddlewareDocumentHeadTagsServer = _interopRequireDefault(__webpack_require__(/*! next-plugin-loader?middleware=document-head-tags-server */ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-head-tags-server!./"));
+var _utils = __webpack_require__(/*! ../next-server/lib/utils */ "./node_modules/next/dist/next-server/lib/utils.js");
 
-var _nextPluginLoaderMiddlewareDocumentBodyTagsServer = _interopRequireDefault(__webpack_require__(/*! next-plugin-loader?middleware=document-body-tags-server */ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-body-tags-server!./"));
+exports.DocumentContext = _utils.DocumentContext;
+exports.DocumentInitialProps = _utils.DocumentInitialProps;
+exports.DocumentProps = _utils.DocumentProps;
 
-var _nextPluginLoaderMiddlewareDocumentHtmlPropsServer = _interopRequireDefault(__webpack_require__(/*! next-plugin-loader?middleware=document-html-props-server */ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=document-html-props-server!./"));
+var _utils2 = __webpack_require__(/*! ../next-server/server/utils */ "./node_modules/next/dist/next-server/server/utils.js");
 
-var _nextPluginLoaderMiddlewareUnstableEnhanceAppServer = _interopRequireDefault(__webpack_require__(/*! next-plugin-loader?middleware=unstable-enhance-app-server */ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=unstable-enhance-app-server!./"));
-
-var _nextPluginLoaderMiddlewareUnstableGetStylesServer = _interopRequireDefault(__webpack_require__(/*! next-plugin-loader?middleware=unstable-get-styles-server */ "./node_modules/next/dist/build/webpack/loaders/next-plugin-loader.js?middleware=unstable-get-styles-server!./"));
-/* eslint-disable */
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
-// @ts-ignore
-
+var _htmlescape = __webpack_require__(/*! ../server/htmlescape */ "./node_modules/next/dist/server/htmlescape.js");
 
 function middleware(_x) {
   return _middleware.apply(this, arguments);
@@ -817,6 +702,10 @@ function getOptionalModernScriptVariant(path) {
 
   return path;
 }
+
+function isLowPriority(file) {
+  return file.includes('_buildManifest');
+}
 /**
 * `Document` component handles the initial `document` markup and renders only on the server side.
 * Commonly used for implementing server side rendering for `css-in-js` libraries.
@@ -830,7 +719,7 @@ class Document extends _react.Component {
   */
   static getInitialProps(ctx) {
     return (0, _asyncToGenerator2.default)(function* () {
-      var enhancers = yield (0, _nextPluginLoaderMiddlewareUnstableEnhanceAppServer.default)(ctx);
+      var enhancers =  false ? undefined : [];
 
       var enhanceApp = App => {
         for (var enhancer of enhancers) {
@@ -847,7 +736,7 @@ class Document extends _react.Component {
       } = yield ctx.renderPage({
         enhanceApp
       });
-      var styles = [...(0, _server.default)(), ...(yield (0, _nextPluginLoaderMiddlewareUnstableGetStylesServer.default)(ctx))];
+      var styles = [...(0, _server.default)(), ...( false ? undefined : [])];
       return {
         html,
         head,
@@ -876,9 +765,9 @@ class Document extends _react.Component {
 }
 
 exports.default = Document;
-Document.headTagsMiddleware = _nextPluginLoaderMiddlewareDocumentHeadTagsServer.default;
-Document.bodyTagsMiddleware = _nextPluginLoaderMiddlewareDocumentBodyTagsServer.default;
-Document.htmlPropsMiddleware = _nextPluginLoaderMiddlewareDocumentHtmlPropsServer.default;
+Document.headTagsMiddleware =  false ? undefined : () => [];
+Document.bodyTagsMiddleware =  false ? undefined : () => [];
+Document.htmlPropsMiddleware =  false ? undefined : () => [];
 
 class Html extends _react.Component {
   constructor() {
@@ -920,7 +809,7 @@ class Head extends _react.Component {
     var cssLinkElements = [];
     cssFiles.forEach(file => {
       cssLinkElements.push(_react.default.createElement("link", {
-        key: "${file}-preload",
+        key: file + "-preload",
         nonce: this.props.nonce,
         rel: "preload",
         href: assetPrefix + "/_next/" + encodeURI(file),
@@ -978,9 +867,9 @@ class Head extends _react.Component {
       // the feature is enabled. This clause will filter down to the
       // modern variants only.
       //
-      // Also filter out _buildManifest because it should not be
+      // Also filter out low priority files because they should not be
       // preloaded for performance reasons.
-      return file.endsWith(getOptionalModernScriptVariant('.js')) && !file.includes('_buildManifest');
+      return file.endsWith(getOptionalModernScriptVariant('.js')) && !isLowPriority(file);
     }) : [];
     return preloadFiles.length === 0 ? null : preloadFiles.map(file => {
       return _react.default.createElement("link", {
@@ -1084,7 +973,7 @@ class Head extends _react.Component {
       var hasStyles = el => el && el.props && el.props.dangerouslySetInnerHTML && el.props.dangerouslySetInnerHTML.__html; // @ts-ignore Property 'props' does not exist on type ReactElement
 
 
-      styles.props.children.map(child => {
+      styles.props.children.forEach(child => {
         if ((0, _isArray.default)(child)) {
           child.map(el => hasStyles(el) && curStyles.push(el));
         } else if (hasStyles(child)) {
@@ -1112,7 +1001,7 @@ class Head extends _react.Component {
       content: "width=device-width,minimum-scale=1,initial-scale=1"
     }), !hasCanonicalRel && _react.default.createElement("link", {
       rel: "canonical",
-      href: canonicalBase + (0, _utils.cleanAmpPath)(dangerousAsPath)
+      href: canonicalBase + (0, _utils2.cleanAmpPath)(dangerousAsPath)
     }), _react.default.createElement("link", {
       rel: "preload",
       as: "script",
@@ -1237,12 +1126,9 @@ class NextScript extends _react.Component {
     var {
       _devOnlyInvalidateCacheQueryString
     } = this.context;
-    return files.map(file => {
-      // Only render .js files here
-      if (!/\.js$/.test(file)) {
-        return null;
-      }
-
+    var normalScripts = files.filter(file => file.endsWith('.js') && !isLowPriority(file));
+    var lowPriorityScripts = files.filter(file => file.endsWith('.js') && isLowPriority(file));
+    return [...normalScripts, ...lowPriorityScripts].map(file => {
       var modernProps = {};
 
       if (false) {}

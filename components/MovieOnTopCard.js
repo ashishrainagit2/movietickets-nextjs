@@ -7,9 +7,9 @@ const MovieOnTopCard = (props) => {
                 .masterImage {
                     text-align: center;
                     margin: 0 auto;
-                    background: #141414;
-                    height: 800px;
                     overflow: hidden;
+                    height : 600px;
+                    width: 100%;
                 }
                 .masterImage img {
                 }
